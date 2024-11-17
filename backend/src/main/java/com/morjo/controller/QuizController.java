@@ -1,6 +1,7 @@
 package com.morjo.controller;
 
 import com.morjo.model.dto.Quiz;
+import com.morjo.model.dto.QuizResult;
 import com.morjo.model.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,21 @@ public class QuizController {
         Quiz quiz = quizService.findQuizById(quizId);
 
         if (quiz == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 번호의 퀴즈가 없습니다");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 번호의 퀴즈를 찾을 수 없습니다");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(quiz);
+    }
+
+    @GetMapping("/{quizId}/result")
+    public ResponseEntity<?> getQuizResult(@PathVariable("quizId") int quizId) {
+        QuizResult result = quizService.getQuizResultById(quizId);
+
+        if (result == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 번호의 퀴즈를 찾을 수 없습니다");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 }
