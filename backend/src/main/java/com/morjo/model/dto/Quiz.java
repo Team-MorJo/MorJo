@@ -12,7 +12,6 @@ public class Quiz {
     private long quizId;
     private String content;
     private List<String> options = new ArrayList<>();
-    private int answer;
     private long createdUserId;
     private Timestamp createdAt;
 
