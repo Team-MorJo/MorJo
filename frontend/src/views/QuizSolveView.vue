@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <quiz-conent :content="content"></quiz-conent>
-    <quiz-option v-for="(option, index) in options" :key="option" :option="option" :selected="index === userAnswer"
+    <quiz-option v-for="(option, index) in options" :key="option" :option="option" :selected="index === userAnswer - 1"
                  @click="onAnswerClick(index)"></quiz-option>
     <hr>
     <div class="this-is">이건</div>
@@ -26,11 +26,11 @@ const options = ref([
   '살려주세요',
   '집에가고싶어'
 ])
-const userAnswer = ref(-1)
-const isCommonSense = ref(-1)
+const userAnswer = ref(0)
+const isCommonSense = ref(0)
 
 const onAnswerClick = (index) => {
-  userAnswer.value = index
+  userAnswer.value = index + 1
 }
 
 const onButtonClick = (val) => {
