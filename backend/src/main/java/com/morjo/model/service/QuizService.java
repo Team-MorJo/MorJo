@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 public class QuizService {
     private final QuizDao quizDao;
 
+    public Quiz getQuizRandom() {
+        return quizDao.selectQuizRandom();
+    }
+
     public Quiz getQuizById(long quizId) {
         return quizDao.selectQuizById(quizId);
     }

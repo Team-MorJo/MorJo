@@ -17,6 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuizController {
     private final QuizService quizService;
 
+    @GetMapping("/random")
+    public ResponseEntity<?> getRandomQuiz() {
+        Quiz quiz = quizService.getQuizRandom();
+
+        if (quiz == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("퀴즈가 없습니다");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(quiz);
+    }
+
     @GetMapping("/{quizId}")
     public ResponseEntity<?> getSpecificQuiz(@PathVariable("quizId") int quizId) {
         Quiz quiz = quizService.getQuizById(quizId);
