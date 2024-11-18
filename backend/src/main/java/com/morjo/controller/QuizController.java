@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuizController {
     private final QuizService quizService;
 
+    // !TODO 유저정보를 받아서 안 푼 문제만 주게 수정필요
     @GetMapping("/random")
     public ResponseEntity<?> getRandomQuiz() {
         Quiz quiz = quizService.getQuizRandom();
