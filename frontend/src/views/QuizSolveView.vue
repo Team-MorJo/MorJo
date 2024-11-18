@@ -17,7 +17,8 @@ import QuizConent from '@/components/quiz/QuizConent.vue'
 import QuizOption from '@/components/quiz/QuizOption.vue'
 import QuizButton from '@/components/quiz/QuizButton.vue'
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { getRandomQuiz } from '@/api/quizApi.js'
 
 const content = ref('지금 내 마음은?')
 const options = ref([
@@ -37,6 +38,11 @@ const onButtonClick = (val) => {
   isCommonSense.value = val
 }
 
+onMounted(async () => {
+  const data = await getRandomQuiz()
+  content.value = data.content;
+  options.value = data.options;
+})
 </script>
 
 <style scoped>
