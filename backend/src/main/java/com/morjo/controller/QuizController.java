@@ -18,8 +18,8 @@ public class QuizController {
     private final QuizService quizService;
 
     @GetMapping("/{quizId}")
-    public ResponseEntity<?> findSpecificQuiz(@PathVariable("quizId") int quizId) {
-        Quiz quiz = quizService.findQuizById(quizId);
+    public ResponseEntity<?> getSpecificQuiz(@PathVariable("quizId") int quizId) {
+        Quiz quiz = quizService.getQuizById(quizId);
 
         if (quiz == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 번호의 퀴즈를 찾을 수 없습니다");
