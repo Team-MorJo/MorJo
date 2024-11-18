@@ -2,12 +2,19 @@
   <div class="container">
     <quiz-conent :content="content"></quiz-conent>
     <quiz-option v-for="option in options" :key="option.id" :option="option"></quiz-option>
+    <hr>
+    <div class="this-is">이건</div>
+    <div class="quiz-buttons">
+      <quiz-button value="상식이다"></quiz-button>
+      <quiz-button value="아니다"></quiz-button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import QuizConent from '@/components/quiz/QuizConent.vue'
 import QuizOption from '@/components/quiz/QuizOption.vue'
+import QuizButton from '@/components/quiz/QuizButton.vue'
 
 import { ref } from 'vue'
 const content = ref("지금 내 마음은?")
@@ -28,7 +35,13 @@ const options = ref([
 
   width: 40%;
   padding: 20px;
-  border-radius: 10px;
-  background-color: #d9d9d9;
+  border: 1px solid #000000;
+}
+.this-is {
+  font-size: 20px;
+}
+.quiz-buttons {
+  display: flex;
+  gap: 20px;
 }
 </style>

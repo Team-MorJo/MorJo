@@ -14,7 +14,7 @@ defineProps({
 .answer {
   padding: 12px;
   font-size: 16px;
-  border-radius: 4px;
-  background-color: #f3f3f3;
+  border: 1px solid #000000;
+  cursor: pointer;
 }
 </style>
