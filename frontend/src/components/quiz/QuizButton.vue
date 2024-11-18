@@ -1,5 +1,5 @@
 <template>
-  <button class="button">
+  <button class="button" :class="{ selected }">
     {{ value }}
   </button>
 </template>
@@ -7,6 +7,7 @@
 <script setup>
 defineProps({
   value: String,
+  selected: Boolean,
 })
 </script>
 
@@ -17,5 +18,8 @@ defineProps({
   border: 1px solid #000000;
 
   font-size: 24px;
+}
+.button:hover, .selected {
+  border: 2px solid #000000;
 }
 </style>
