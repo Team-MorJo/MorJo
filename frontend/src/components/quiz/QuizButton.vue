@@ -20,6 +20,6 @@ defineProps({
   font-size: 24px;
 }
 .button:hover, .selected {
-  border: 2px solid #000000;
+  border: 2px solid;
 }
 </style>

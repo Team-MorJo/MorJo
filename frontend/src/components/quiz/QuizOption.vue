@@ -21,6 +21,6 @@ defineProps({
   cursor: pointer;
 }
 .answer:hover, .selected {
-  border: 2px solid #000000;
+  border: 2px solid;
 }
 </style>
