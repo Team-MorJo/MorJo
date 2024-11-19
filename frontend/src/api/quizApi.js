@@ -7,6 +7,15 @@ export const getRandomQuiz = async () => {
     const response = await axios.get(`${BASE_URL}/quiz/random`)
     return response.data
   } catch (error) {
-    console.error(error)
+    return error.data
+  }
+}
+
+export const getQuizResult = async (quizId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/quiz/${quizId}/result`)
+    return response.data
+  } catch (error) {
+    return error.data
   }
 }
