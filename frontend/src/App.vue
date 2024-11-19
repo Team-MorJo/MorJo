@@ -1,6 +1,10 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY
+const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI
+
+const handleButtonClick = () => {
+  location.href=`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
+}
 </script>
 
 <template>
@@ -16,6 +20,8 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header>
+
+  <button @click="handleButtonClick">카카오 로그인</button>
 
   <RouterView />
 </template>
