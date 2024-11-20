@@ -3,8 +3,10 @@ package com.morjo.model.service;
 import com.morjo.model.dao.UserDao;
 import com.morjo.model.dto.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public class UserSerivce {
 
     private final UserDao userDao;
