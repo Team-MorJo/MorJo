@@ -65,7 +65,7 @@ public class QuizController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("본문, 선택지 또는 정답 값에 오류가 있습니다.");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(quizId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(quizId);
     }
 
 }
