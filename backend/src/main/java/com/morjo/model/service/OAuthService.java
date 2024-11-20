@@ -53,20 +53,4 @@ public class OAuthService {
 		// !TODO 토큰 정보 받아오기 실패시 처리 따로 해주기
 		return new RestTemplate().exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.GET, entity, KakaoTokenInfo.class).getBody();
 	}
-
-	public long getUserId(Long kakaoId) {
-		User user = userDao.selectUser(kakaoId);
-
-		if (user == null) {
-			return -1;
-		}
-
-		return user.getUserId();
-	}
-
-	public boolean join(User user, long kakaoId) {
-		// !TODO nickname 유효성 검사
-		// !TODO 다양한 예외 상황들을 어떻게 http 응답에 보낼까
-		return userDao.insertUser(user) == 1;
-	}
 }
