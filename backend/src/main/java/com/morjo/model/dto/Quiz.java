@@ -1,15 +1,11 @@
 package com.morjo.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -24,5 +20,4 @@ public class Quiz {
     private String answer;
     private long createdUserId;
     private Timestamp createdAt;
-    
 }
