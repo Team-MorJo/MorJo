@@ -10,9 +10,8 @@
         SELECT * FROM user
         WHERE user_id = #{UserId}
     </select>
-    <insert id="insertUser" parameterType="User">
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO user (kakao_id, nickname)
         VALUES (#{kakaoId}, #{nickname})
     </insert>
-
 </mapper>
