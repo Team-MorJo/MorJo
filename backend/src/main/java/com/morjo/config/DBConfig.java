@@ -8,5 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class DBConfig {
     public static void main(String[] args) {
 
+        
     }
 }
