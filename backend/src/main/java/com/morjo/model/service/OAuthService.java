@@ -23,7 +23,7 @@ public class OAuthService {
 
 	public boolean isUser(String accessToken) {
 		KakaoTokenInfo tokenInfo = oAuthUtil.getKakaoTokenInfo(accessToken);
-		User user = userDao.selectUser(tokenInfo.getId());
+		User user = userDao.selectUserByKakaoId(tokenInfo.getId());
 
 		return user != null;
 	}
