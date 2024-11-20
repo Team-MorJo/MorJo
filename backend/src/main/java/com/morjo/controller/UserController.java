@@ -6,12 +6,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserSerivce userSerivce;
@@ -35,5 +34,24 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 닉네임입니다");
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<?> getUser(HttpSession session) {
+        User userId = (User) session.getAttribute("userId");
+
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 상태가 아닙니다");
+        }
+
+        return null;
+        // !TODO UserService.getUserByUserId() 만들어지면 주석 풀기
+//        User user = userSerivce.getUserByUserId(userId);
+//
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사이트 회원이 아닙니다");
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
