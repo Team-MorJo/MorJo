@@ -4,6 +4,7 @@ import com.morjo.model.dto.KakaoTokenInfo;
 import com.morjo.model.dto.User;
 import com.morjo.model.service.UserSerivce;
 import jakarta.servlet.http.HttpSession;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,18 @@ public class LoginController {
 
         headers.setLocation(URI.create(CLIENT_URL + "/join"));
         return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).headers(headers).build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 상태가 아닙니다");
+        }
+
+        session.removeAttribute("userId");
+        return ResponseEntity.status(HttpStatus.OK).body("로그인 완료");
     }
 
     @PostMapping("/join")
