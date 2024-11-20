@@ -17,7 +17,6 @@ import com.morjo.model.service.QuizService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:5173/")
 @RestController
 @RequestMapping("/quiz")
 public class QuizController {
