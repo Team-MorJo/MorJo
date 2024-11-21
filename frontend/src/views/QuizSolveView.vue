@@ -8,9 +8,9 @@
     <div class="this-is">이건</div>
     <div class="quiz-buttons">
       <quiz-button value="상식이다" :selected="isCommonSense === true" :total="result.total" :votes="result.isCommonSense"
-                   @click="onButtonClick(true)"></quiz-button>
+                   :isResult="isResult" @click="onButtonClick(true)"></quiz-button>
       <quiz-button value="아니다" :selected="isCommonSense === false" :total="result.total" :votes="result.notCommonSense"
-                   @click="onButtonClick(false)"></quiz-button>
+                   :isResult="isResult" @click="onButtonClick(false)"></quiz-button>
     </div>
   </div>
 </template>
