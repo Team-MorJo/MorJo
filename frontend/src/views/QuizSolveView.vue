@@ -57,6 +57,7 @@ onMounted(async () => {
   width: 40%;
   padding: 20px;
   border: 1px solid #000000;
+  min-width: 450px;
 }
 
 .this-is {

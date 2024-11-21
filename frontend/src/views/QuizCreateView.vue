@@ -1,0 +1,272 @@
+<template>
+  <div class="container">
+    <!-- 문제 내용 입력 컴포넌트 -->
+    <div class="content-field">
+      <label for="content" class="content">문제 내용</label>
+      <textarea type="text" :value="content" placeholder="문제를 입력하세요" @input="handleContentInput"
+        class="content-input" />
+    </div>
+    <hr />
+
+    <!-- 선택지 입력 컴포넌트들 -->
+    <div v-for="(option, index) in options" :key="index" class="option-field">
+      <div class="option-input-wrapper">
+        <!-- 선택지 입력란 -->
+        <input type="radio" :name="'option'" :value="index + 1" v-model="answer" :id="'option' + index" hidden />
+        <label :for="'option' + index" class="answer-button" :class="{ 'selected': answer === index + 1 }">
+          <i :class="answer === index + 1 ? 'bi bi-check-square' : 'bi bi-square'"></i>
+        </label>
+        <quiz-create-option :value="option" :placeholder="'선택지 ' + (index + 1) + '을 입력하세요'"
+          @input="handleOptionInput(index, $event)" />
+        <!-- 마지막 항목의 제거 버튼 -->
+        <i v-if="options.length > 2 && index === options.length - 1" @click="removeOption(index)"
+          class="bi bi-dash-square remove-button"></i>
+      </div>
+    </div>
+
+    <!-- 선택지 추가 버튼 -->
+    <i v-if="options.length < 4" class="bi bi-plus-lg add-button" @click="addOption"></i>
+
+    <!-- 등록 버튼 -->
+    <div class="submit-button">
+      <button @click="submitQuiz">등록</button>
+    </div>
+  </div>
+  <div v-if="errorMessage" class="alert">
+    {{ errorMessage }}
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import QuizCreateOption from "@/components/quiz/QuizCreateOption.vue";
+import { postQuizCreate } from "@/api/quizApi";
+
+// 문제와 선택지를 관리하는 상태
+const content = ref("")
+const options = ref(["", ""])
+const answer = ref(0)
+const errorMessage = ref("")
+
+// 선택지 추가
+const addOption = () => {
+  if (options.value.length < 4) {
+    options.value.push("")
+  }
+};
+
+// 선택지 제거
+const removeOption = (index) => {
+  options.value.splice(index, 1)
+  if (answer.value === index + 1) {
+    answer.value = 0
+  }
+};
+
+// 퀴즈 등록 처리
+const submitQuiz = async () => {
+  if (content.value.trim() === '') {
+    errorMessage.value = "문제 내용을 입력해주세요."
+    return
+  }
+
+  for (const option of options.value) {
+    if (option.trim() === '') {
+      errorMessage.value = "모든 선택지 내용을 입력해주세요."
+      return
+    }
+  }
+
+  if (!answer.value) {
+    errorMessage.value = "정답을 선택해주세요."
+    return
+  }
+
+  errorMessage.value = ""
+  try {
+    await postQuizCreate(
+      content.value,
+      options.value[0],
+      options.value[1],
+      options.value[2],
+      options.value[3],
+      answer.value
+    )
+  } catch (error) {
+    errorMessage.value = '퀴즈 등록 중 오류가 발생했습니다.'
+  }
+}
+
+// 문제 내용 동적 높이
+const autoResize = (event) => {
+  const textarea = event.target
+  textarea.style.height = "auto"
+  textarea.style.height = `${textarea.scrollHeight}px`
+}
+
+// 문제 내용 글자 수 제한
+const checkContentLength = () => {
+  const maxLength = 255
+  if (content.value.length > maxLength) {
+    content.value = content.value.slice(0, maxLength)
+    errorMessage.value = '문제 내용의 글자 수 제한을 넘겼습니다.'
+    return
+  }
+  errorMessage.value = ''
+}
+
+// 문제 내용 처리
+const handleContentInput = (event) => {
+  autoResize(event)
+  content.value = event.target.value
+  checkContentLength()
+}
+
+// 선택지 내용 글자 수 및 바이트 수 제한
+const checkOptionLength = (index) => {
+  const maxLength = 30
+  // const maxByte = 32
+  // const byteLength = new TextEncoder().encode(options.value[index]).length
+  if (options.value[index].length > maxLength) {
+    options.value[index] = options.value[index].slice(0, maxLength)
+    errorMessage.value = '선택지의 글자 수 제한을 넘겼습니다.'
+    return
+  }
+  errorMessage.value = ''
+}
+
+// 선택지 내용 처리
+const handleOptionInput = (index, event) => {
+  options.value[index] = event.target.value
+  checkOptionLength(index)
+}
+
+// 선택지 내용 글자 수 제한
+</script>
+
+<style scoped>
+.option-input-wrapper input[type="radio"] {
+  display: none;
+}
+
+.answer-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.answer-button.selected {
+  color: #1ed71e;
+}
+
+.content {
+  font-size: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 40%;
+  padding: 20px;
+  border: 1px solid #000000;
+  min-width: 450px;
+}
+
+.content-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.content-input {
+  padding: 12px;
+  font-size: 20px;
+  border: 1px solid;
+  width: 100%;
+  resize: none;
+  height: 52px;
+  overflow-y: hidden;
+}
+
+.content-input::placeholder {
+  font-size: 20px;
+}
+
+.option-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.option-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  width: 100%;
+}
+
+.quiz-create-option {
+  flex-grow: 1;
+}
+
+.remove-button {
+  cursor: pointer;
+  font-size: 26px;
+  color: #000000;
+  position: absolute;
+  right: 10px;
+}
+
+.remove-button:hover {
+  color: #ff1828;
+}
+
+.add-button {
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.add-button:hover {
+  color: #1ed71e;
+  border: 1px solid #e4e3e3;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.submit-button button {
+  font-size: 16px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 46px;
+}
+
+.submit-button button:hover {
+  color: black;
+  background-color: white;
+  border: 1px solid;
+}
+
+.answer-button {
+  font-size: 24px;
+}
+
+.alert {
+  color: #ff1828;
+  font-size: 24px;
+}
+</style>

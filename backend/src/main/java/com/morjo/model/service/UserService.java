@@ -14,7 +14,7 @@ public class UserService {
     
     public boolean checkUser(Long userId) {
         User user = userDao.selectUserByUserId(userId);
-        
+        System.out.println(user);
         return user != null;
     }
     
