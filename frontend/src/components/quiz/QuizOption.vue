@@ -1,5 +1,5 @@
 <template>
-  <div class="answer" :class="{ selected }" :style="answerStyle" @mouseup="handleMouseUp">
+  <div class="answer" :class="{ selected }" :style="boxStyle" @mouseup="handleMouseUp">
     <span class="option">{{ option }}</span>
     <div v-show="isResult" class="graph" :style="graphStyle"></div>
     <span v-show="isResult">{{ showPercent.toFixed(1) }}%</span>
@@ -38,10 +38,11 @@ watch(() => props.isResult, (newValue) => {
   }
 })
 
-const answerStyle = computed(() => {
+const boxStyle = computed(() => {
   return {
     border: (props.isResult ? ((props.isAnswer ? '#4CAF50' : '#D14D72') + " 2px") : '#000000 1px') + " solid",
-    boxShadow: (props.selected ? "0 0 10px" : "0 0 0") + " " + (props.isResult ? (props.isAnswer ? "#4CAF50" : "#D14D72") : '#616161')
+    boxShadow: (props.selected ? "0 0 10px" : "0 0 0") + " " + (props.isResult ? (props.isAnswer ? "#4CAF50" : "#D14D72") : '#616161'),
+    cursor: props.isResult ? 'default' : 'pointer'
   }
 })
 
@@ -64,7 +65,6 @@ const graphStyle = computed(() => {
   line-height: 25px;
   padding: 12px;
   font-size: 16px;
-  cursor: pointer;
 }
 .graph {
   position: absolute;

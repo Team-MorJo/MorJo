@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :style="borderStyle">
+  <button class="button" :style="boxStyle">
     <span>{{ value }}</span>
     <span>{{ isResult ? ` ${showPercent.toFixed(1)} %` : ''}}</span>
     <div class="graph" :style="graphStyle"></div>
@@ -37,10 +37,11 @@ watch(() => props.isResult, (newValue) => {
   }
 })
 
-const borderStyle = computed(() => {
+const boxStyle = computed(() => {
   return {
     border: props.isResult && props.selected ? "2px solid #2196F3" : "1px solid #000000",
-    boxShadow: props.isResult && props.selected ? "0 0 10px #2196F3" : "none"
+    boxShadow: props.isResult && props.selected ? "0 0 10px #2196F3" : "none",
+    cursor: props.isResult ? 'default' : 'pointer'
   }
 })
 
