@@ -2,7 +2,7 @@
   <button class="button" :style="boxStyle">
     <span>{{ value }}</span>
     <span>{{ isResult ? ` ${showPercent.toFixed(1)} %` : ''}}</span>
-    <div class="graph" :style="graphStyle"></div>
+    <div v-show="isResult" class="graph" :style="graphStyle"></div>
   </button>
 </template>
 
