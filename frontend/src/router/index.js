@@ -23,6 +23,14 @@ const router = createRouter({
       path: '/create',
       name: 'create',
       component: QuizCreateView,
+      beforeEnter: (to, from) => {
+        const user = useUser()
+        if (!user.isLoggedIn) {
+          alert('로그인이 필요합니다.')
+          return { name: 'home'}
+        }
+        return true
+      }
     },
     {
       path: '/404',

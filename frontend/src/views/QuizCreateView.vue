@@ -176,8 +176,6 @@ const handleOptionInput = (index, event) => {
   checkOptionLength(index)
   checkOptionByte(index)
 }
-
-// 선택지 내용 글자 수 제한
 </script>
 
 <style scoped>

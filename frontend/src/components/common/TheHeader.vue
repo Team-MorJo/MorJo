@@ -44,10 +44,7 @@ const goToQuizRegister = () => {
 
   padding: 20px 0 12px 0;
 }
-.login, .logout {
-  cursor: pointer;
-}
-.create {
+.login, .logout, .create {
   cursor: pointer;
 }
 </style>
