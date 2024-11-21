@@ -17,7 +17,7 @@ const props = defineProps({
   isResult: Boolean,
 })
 
-const percent = computed(() => (props.votes / props.total * 100).toFixed(1))
+const percent = computed(() => props.total === 0 ? 0 : (props.votes / props.total * 100).toFixed(1))
 const showPercent = ref(0)
 
 const percentInterval = () => {
