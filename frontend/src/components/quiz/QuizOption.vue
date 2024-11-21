@@ -1,5 +1,5 @@
 <template>
-  <div class="answer" :class="{ selected }" :style="answerStyle" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+  <div class="answer" :class="{ selected }" :style="answerStyle" @mouseup="handleMouseUp">
     <span class="option">{{ option }}</span>
     <div v-show="isResult" class="graph" :style="graphStyle"></div>
     <span v-show="isResult">{{ percent }}%</span>
@@ -7,9 +7,8 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
-const mouseIn = ref(false)
 const props = defineProps({
   option: String,
   selected: Boolean,
@@ -35,16 +34,7 @@ const graphStyle = computed(() => {
   }
 })
 
-const handleMouseEnter = () => {
-  if (props.isResult) {
-    return
-  }
-  mouseIn.value = true
-}
 
-const handleMouseLeave = () => {
-  mouseIn.value = false
-}
 </script>
 
 <style scoped>
@@ -58,7 +48,6 @@ const handleMouseLeave = () => {
   font-size: 16px;
   cursor: pointer;
 }
-
 .graph {
   position: absolute;
   z-index: -1;
