@@ -58,6 +58,7 @@ const addOption = () => {
 // 선택지 제거
 const removeOption = (index) => {
   options.value.splice(index, 1)
+
   if (answer.value === index + 1) {
     answer.value = 0
   }
@@ -107,11 +108,13 @@ const autoResize = (event) => {
 // 문제 내용 글자 수 제한
 const checkContentLength = () => {
   const maxLength = 255
+
   if (content.value.length > maxLength) {
     content.value = content.value.slice(0, maxLength)
     errorMessage.value = '문제 내용의 글자 수 제한을 넘겼습니다.'
     return
   }
+
   errorMessage.value = ''
 }
 
@@ -122,23 +125,56 @@ const handleContentInput = (event) => {
   checkContentLength()
 }
 
-// 선택지 내용 글자 수 및 바이트 수 제한
+// 선택지 내용 글자 수 제한
 const checkOptionLength = (index) => {
   const maxLength = 30
-  // const maxByte = 32
-  // const byteLength = new TextEncoder().encode(options.value[index]).length
+
   if (options.value[index].length > maxLength) {
     options.value[index] = options.value[index].slice(0, maxLength)
     errorMessage.value = '선택지의 글자 수 제한을 넘겼습니다.'
     return
   }
+
   errorMessage.value = ''
+}
+
+// 선택지 내용 바이트 제한
+const checkOptionByte = (index) => {
+  const maxByte = 32
+  const byteLength = new TextEncoder().encode(options.value[index]).length
+
+  if (byteLength > maxByte) {
+    const characters = options.value[index]
+    let validText = ''
+    let totalByte = 0
+    let flag = true
+
+    for (let character of characters) {
+      const decimal = character.charCodeAt(0)
+      const byte = (decimal >> 7) ? 2 : 1
+
+      if (totalByte + byte > maxByte) {
+        errorMessage.value = '선택지의 글자 수 제한을 넘겼습니다.'
+        flag = false
+        break
+      }
+
+      validText += character
+      totalByte += byte
+    }
+
+    if (flag) {
+      errorMessage.value = ''
+    }
+    options.value[index] = validText
+  }
 }
 
 // 선택지 내용 처리
 const handleOptionInput = (index, event) => {
   options.value[index] = event.target.value
   checkOptionLength(index)
+  checkOptionByte(index)
 }
 
 // 선택지 내용 글자 수 제한
