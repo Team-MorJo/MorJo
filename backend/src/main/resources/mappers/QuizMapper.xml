@@ -15,7 +15,7 @@
         <if test="userId > 0">
             WHERE quiz.quiz_id NOT IN
             (SELECT quiz_id FROM quiz_user
-            WHERE user_id = 1 AND (quiz.quiz_id = quiz_user.quiz_id))
+            WHERE user_id = #{userId} AND (quiz.quiz_id = quiz_user.quiz_id))
         </if>
         ORDER BY RAND() LIMIT 1
     </select>
