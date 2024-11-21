@@ -2,12 +2,12 @@
   <div class="answer" :class="{ selected }" :style="answerStyle" @mouseup="handleMouseUp">
     <span class="option">{{ option }}</span>
     <div v-show="isResult" class="graph" :style="graphStyle"></div>
-    <span v-show="isResult">{{ percent }}%</span>
+    <span v-show="isResult">{{ showPercent.toFixed(1) }}%</span>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   option: String,
@@ -19,6 +19,24 @@ const props = defineProps({
 })
 
 const percent = computed(() => (props.votes / props.total * 100).toFixed(1))
+const showPercent = ref(0)
+
+const percentInterval = () => {
+  const timer = setInterval(() => {
+    showPercent.value += 0.35;
+    if (showPercent.value > percent.value) {
+      showPercent.value = Number(percent.value)
+      clearInterval(timer)
+    }
+  }, 8)
+}
+
+watch(() => props.isResult, (newValue) => {
+  if (newValue === true) {
+    showPercent.value = 0
+    percentInterval()
+  }
+})
 
 const answerStyle = computed(() => {
   return {
@@ -29,7 +47,7 @@ const answerStyle = computed(() => {
 
 const graphStyle = computed(() => {
   return {
-    width: `${ percent.value }%`,
+    width: `${ showPercent.value }%`,
     backgroundColor: props.isAnswer ? '#DFF2E1' : '#FCC8D1'
   }
 })

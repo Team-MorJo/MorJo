@@ -1,13 +1,13 @@
 <template>
   <button class="button" :style="borderStyle">
     <span>{{ value }}</span>
-    <span>{{ isResult ? ` ${percent} %` : ''}}</span>
+    <span>{{ isResult ? ` ${showPercent.toFixed(1)} %` : ''}}</span>
     <div class="graph" :style="graphStyle"></div>
   </button>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   value: String,
@@ -18,6 +18,24 @@ const props = defineProps({
 })
 
 const percent = computed(() => (props.votes / props.total * 100).toFixed(1))
+const showPercent = ref(0)
+
+const percentInterval = () => {
+  const timer = setInterval(() => {
+    showPercent.value += 0.35;
+    if (showPercent.value > percent.value) {
+      showPercent.value = Number(percent.value)
+      clearInterval(timer)
+    }
+  }, 8)
+}
+
+watch(() => props.isResult, (newValue) => {
+  if (newValue === true) {
+    showPercent.value = 0
+    percentInterval()
+  }
+})
 
 const borderStyle = computed(() => {
   return {
@@ -28,7 +46,7 @@ const borderStyle = computed(() => {
 
 const graphStyle = computed(() => {
   return {
-    height: `${ percent.value }%`,
+    height: `${ showPercent.value }%`,
     backgroundColor: props.selected ? "#E3F2FD" : "#E9E9E9",
   }
 })
