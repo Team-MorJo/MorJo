@@ -1,4 +1,5 @@
 <template>
+  <div v-if="showNext" @click="handleShowNextClick" class="show-next"></div>
   <div class="container">
     <quiz-content :content="quiz.content"></quiz-content>
     <quiz-option v-for="(option, index) in quiz.options" :key="option" :option="option" :total="result.total"
@@ -20,7 +21,7 @@ import QuizContent from '@/components/quiz/QuizContent.vue'
 import QuizOption from '@/components/quiz/QuizOption.vue'
 import QuizButton from '@/components/quiz/QuizButton.vue'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { getQuizResult, getRandomQuiz } from '@/api/quizApi.js'
 import { useUser } from '@/stores/user.js'
 import router from '@/router/index.js'
@@ -48,6 +49,8 @@ const result = ref({
   notCommonSense: 0,
   total: 0
 })
+
+const showNext = ref(false)
 
 const onAnswerClick = async (index) => {
   if (isResult.value) {
@@ -97,7 +100,7 @@ const submit = async () => {
   isResult.value = true
 }
 
-onMounted(async () => {
+const setQuiz = async () => {
   const data = await getRandomQuiz()
   quiz.value.quizId = data.quizId
   quiz.value.content = data.content
@@ -105,7 +108,32 @@ onMounted(async () => {
   quiz.value.options[1] = data.option2
   data.option4 ? quiz.value.options[3] = data.option4 : quiz.value.options.length = 3
   data.option3 ? quiz.value.options[2] = data.option3 : quiz.value.options.length = 2
+}
+
+const handleShowNextClick = async () => {
+  await setQuiz()
+  userAnswer.value = 0
+  isCommonSense.value = 0
+  isResult.value = false
+}
+
+onMounted(async () => {
+  await setQuiz()
 })
+
+watch(() => isResult.value, async (newValue) => {
+  if (newValue === true) {
+    setTimeout(() => {
+      showNext.value = true
+      console.log("다음이 나와야해")
+    }, 2500)
+  }
+  if (newValue === false) {
+    await setQuiz()
+    showNext.value = false
+  }
+})
+
 </script>
 
 <style scoped>
@@ -126,5 +154,15 @@ onMounted(async () => {
 .quiz-buttons {
   display: flex;
   gap: 20px;
+}
+
+.show-next {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
 }
 </style>
