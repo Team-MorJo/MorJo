@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <!-- 문제 내용 입력 컴포넌트 -->
     <div class="content-field">
       <label for="content" class="content">문제 내용</label>
       <textarea type="text" :value="content" placeholder="문제를 입력하세요" @input="handleContentInput"
@@ -8,26 +7,21 @@
     </div>
     <hr />
 
-    <!-- 선택지 입력 컴포넌트들 -->
     <div v-for="(option, index) in options" :key="index" class="option-field">
       <div class="option-input-wrapper">
-        <!-- 선택지 입력란 -->
         <input type="radio" :name="'option'" :value="index + 1" v-model="answer" :id="'option' + index" hidden />
         <label :for="'option' + index" class="answer-button" :class="{ 'selected': answer === index + 1 }">
           <i :class="answer === index + 1 ? 'bi bi-check-square' : 'bi bi-square'"></i>
         </label>
         <quiz-create-option :value="option" :placeholder="'선택지 ' + (index + 1) + '을 입력하세요'"
           @input="handleOptionInput(index, $event)" />
-        <!-- 마지막 항목의 제거 버튼 -->
         <i v-if="options.length > 2 && index === options.length - 1" @click="removeOption(index)"
           class="bi bi-dash-square remove-button"></i>
       </div>
     </div>
 
-    <!-- 선택지 추가 버튼 -->
     <i v-if="options.length < 4" class="bi bi-plus-lg add-button" @click="addOption"></i>
 
-    <!-- 등록 버튼 -->
     <div class="submit-button">
       <button @click="submitQuiz">등록</button>
     </div>
@@ -42,20 +36,17 @@ import { ref } from "vue";
 import QuizCreateOption from "@/components/quiz/QuizCreateOption.vue";
 import { postQuizCreate } from "@/api/quizApi";
 
-// 문제와 선택지를 관리하는 상태
 const content = ref("")
 const options = ref(["", ""])
 const answer = ref(0)
 const errorMessage = ref("")
 
-// 선택지 추가
 const addOption = () => {
   if (options.value.length < 4) {
     options.value.push("")
   }
 };
 
-// 선택지 제거
 const removeOption = (index) => {
   options.value.splice(index, 1)
 
@@ -64,7 +55,6 @@ const removeOption = (index) => {
   }
 };
 
-// 퀴즈 등록 처리
 const submitQuiz = async () => {
   if (content.value.trim() === '') {
     errorMessage.value = "문제 내용을 입력해주세요."
@@ -103,14 +93,12 @@ const submitQuiz = async () => {
   }
 }
 
-// 문제 내용 동적 높이
 const autoResize = (event) => {
   const textarea = event.target
   textarea.style.height = "auto"
   textarea.style.height = `${textarea.scrollHeight}px`
 }
 
-// 문제 내용 글자 수 제한
 const checkContentLength = () => {
   const maxLength = 255
 
@@ -123,14 +111,12 @@ const checkContentLength = () => {
   errorMessage.value = ''
 }
 
-// 문제 내용 처리
 const handleContentInput = (event) => {
   autoResize(event)
   content.value = event.target.value
   checkContentLength()
 }
 
-// 선택지 내용 글자 수 제한
 const checkOptionLength = (index) => {
   const maxLength = 30
 
@@ -143,7 +129,6 @@ const checkOptionLength = (index) => {
   errorMessage.value = ''
 }
 
-// 선택지 내용 바이트 제한
 const checkOptionByte = (index) => {
   const maxByte = 32
   const byteLength = new TextEncoder().encode(options.value[index]).length
@@ -175,14 +160,12 @@ const checkOptionByte = (index) => {
   }
 }
 
-// 선택지 내용 처리
 const handleOptionInput = (index, event) => {
   options.value[index] = event.target.value
   checkOptionLength(index)
   checkOptionByte(index)
 }
 </script>
-
 <style scoped>
 .option-input-wrapper input[type="radio"] {
   display: none;
