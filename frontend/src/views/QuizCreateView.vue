@@ -9,8 +9,8 @@
 
     <div v-for="(option, index) in options" :key="index" class="option-field">
       <div class="option-input-wrapper">
-        <input type="radio" :name="'option'" :value="index + 1" v-model="answer" :id="'option' + index" hidden />
-        <label :for="'option' + index" class="answer-button" :class="{ 'selected': answer === index + 1 }">
+        <input type="radio" :value="index + 1" v-model="answer" :id="`option${index}`" hidden />
+        <label :for="`option${index}`" class="answer-button" :class="{ selected: answer === index + 1 }">
           <i :class="answer === index + 1 ? 'bi bi-check-square' : 'bi bi-square'"></i>
         </label>
         <quiz-create-option :value="option" :placeholder="'선택지 ' + (index + 1) + '을 입력하세요'"
