@@ -2,8 +2,8 @@
   <div class="container">
     <div class="content-field">
       <label for="content" class="content">문제 내용</label>
-      <textarea type="text" :value="content" placeholder="문제를 입력하세요" @input="handleContentInput"
-        class="content-input" />
+      <textarea rows="1" type="text" :value="content" placeholder="문제를 입력하세요" @input="handleContentInput"
+        @keydown.enter.prevent class="content-input" />
     </div>
     <hr />
 
@@ -277,5 +277,6 @@ const handleOptionInput = (index, event) => {
 .alert {
   color: #ff1828;
   font-size: 24px;
+  padding-bottom: 64px;
 }
 </style>
