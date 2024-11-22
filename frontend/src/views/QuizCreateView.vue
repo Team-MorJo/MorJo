@@ -77,11 +77,11 @@ const handleQuizSubmit = async () => {
   errorMessage.value = ""
 
   const quiz = {
-    content: content.value,
-    option1: options.value[0],
-    option2: options.value[1],
-    option3: options.value[2],
-    option4: options.value[3],
+    content: content.value.trim(),
+    option1: options.value[0].trim(),
+    option2: options.value[1].trim(),
+    option3: options.value[2] ? options.value[2].trim() : null,
+    option4: options.value[3] ? options.value[3].trim() : null,
     answer: answer.value,
   }
 
