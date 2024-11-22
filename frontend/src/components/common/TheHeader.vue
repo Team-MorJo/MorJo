@@ -2,9 +2,9 @@
   <header class="header">
     <h1>너만모르조?</h1>
     <nav>
-      <span @click="handleToQuizCreate" class="create">문제등록 | </span>
-      <span v-if="!user.isLoggedIn" @click="handleLogin" class="login">로그인</span>
-      <span v-else @click="handleLogout" class="logout">로그아웃</span>
+      <span @click="handleToQuizCreate" class="create pointer">문제등록 | </span>
+      <span v-if="!user.isLoggedIn" @click="handleLogin" class="login pointer">로그인</span>
+      <span v-else @click="handleLogout" class="logout pointer">로그아웃</span>
       <span v-if="user.isLoggedIn"> | 내정보</span>
     </nav>
   </header>
@@ -44,7 +44,7 @@ const handleToQuizCreate = () => {
 
   padding: 20px 0 12px 0;
 }
-.login, .logout, .create {
+.pointer {
   cursor: pointer;
 }
 </style>
