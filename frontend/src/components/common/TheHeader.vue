@@ -2,7 +2,7 @@
   <header class="header">
     <h1>너만모르조?</h1>
     <nav>
-      <span @click="goToQuizRegister" class="create">문제등록 | </span>
+      <span @click="handleToQuizCreate" class="create">문제등록 | </span>
       <span v-if="!user.isLoggedIn" @click="handleLogin" class="login">로그인</span>
       <span v-else @click="handleLogout" class="logout">로그아웃</span>
       <span v-if="user.isLoggedIn"> | 내정보</span>
@@ -30,7 +30,7 @@ const handleLogout = async () => {
   window.location.reload()
 }
 
-const goToQuizRegister = () => {
+const handleToQuizCreate = () => {
   router.push({ name: 'create'})
 }
 </script>
