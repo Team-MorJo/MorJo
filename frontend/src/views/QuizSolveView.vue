@@ -4,14 +4,15 @@
     <quiz-content :content="quiz.content"></quiz-content>
     <quiz-option v-for="(option, index) in quiz.options" :key="option" :option="option" :total="result.total"
                  :isResult="isResult" :votes="result.userAnswers[index]" :isAnswer="result.answer - 1 === index"
-                 :selected="index === userAnswer - 1" @click="onAnswerClick(index)"></quiz-option>
+
+                 :selected="index === userAnswer - 1" @click="handleAnswerClick(index)"></quiz-option>
     <hr class="line">
     <div class="this-is">이건</div>
     <div class="quiz-buttons">
       <quiz-button value="상식이다" :selected="isCommonSense === true" :total="result.total" :votes="result.isCommonSense"
-                   :isResult="isResult" @click="onButtonClick(true)"></quiz-button>
+                   :isResult="isResult" @click="handleButtonClick(true)"></quiz-button>
       <quiz-button value="아니다" :selected="isCommonSense === false" :total="result.total" :votes="result.notCommonSense"
-                   :isResult="isResult" @click="onButtonClick(false)"></quiz-button>
+                   :isResult="isResult" @click="handleButtonClick(false)"></quiz-button>
     </div>
   </div>
 </template>
@@ -41,6 +42,15 @@ const quiz = ref({
 const userAnswer = ref(0)
 const isCommonSense = ref(0)
 
+const handleAnswerClick = async (index) => {
+  if (isResult.value) {
+    return
+  }
+
+  userAnswer.value = index + 1
+  await submit()
+}
+
 const isResult = ref(false)
 const result = ref({
   answer: 0,
@@ -52,16 +62,7 @@ const result = ref({
 
 const showNext = ref(false)
 
-const onAnswerClick = async (index) => {
-  if (isResult.value) {
-    return
-  }
-
-  userAnswer.value = index + 1
-  await submit()
-}
-
-const onButtonClick = async (val) => {
+const handleButtonClick = async (val) => {
   if (isResult.value) {
     return
   }
@@ -143,9 +144,7 @@ watch(() => isResult.value, async (newValue) => {
 
   width: 40%;
   padding: 20px;
-  //border: 1px solid #c3c3c3;
-  //border-radius: 4px;
-  //box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  min-width: 450px;
 }
 
 .this-is {
