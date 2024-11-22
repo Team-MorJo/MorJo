@@ -18,15 +18,15 @@ export const getQuizResult = async (quizId) => {
   }
 }
 
-export const postQuizCreate = async (content, option1, option2, option3, option4, answer) => {
+export const postQuizCreate = async ({ content, option1, option2, option3, option4, answer }) => {
   try {
     const response = await api.post('/quiz/create', {
-      content: content,
-      option1: option1,
-      option2: option2,
-      option3: option3,
-      option4: option4,
-      answer: answer,
+      content,
+      option1,
+      option2,
+      option3,
+      option4,
+      answer,
     })
     console.log(response.data);
     return response.data

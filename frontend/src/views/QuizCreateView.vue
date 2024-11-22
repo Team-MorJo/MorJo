@@ -84,14 +84,19 @@ const submitQuiz = async () => {
   }
 
   errorMessage.value = ""
+
+  const quiz = {
+    content: content.value,
+    option1: options.value[0],
+    option2: options.value[1],
+    option3: options.value[2],
+    option4: options.value[3],
+    answer: answer.value,
+  }
+
   try {
     await postQuizCreate(
-      content.value,
-      options.value[0],
-      options.value[1],
-      options.value[2],
-      options.value[3],
-      answer.value
+      quiz
     )
   } catch (error) {
     errorMessage.value = '퀴즈 등록 중 오류가 발생했습니다.'
