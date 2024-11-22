@@ -14,9 +14,9 @@
           <i :class="answer === index + 1 ? 'bi bi-check-square' : 'bi bi-square'"></i>
         </label>
         <quiz-create-option :value="option" :placeholder="'선택지 ' + (index + 1) + '을 입력하세요'"
-          @input="handleOptionInput(index, $event)" />
-        <i v-if="options.length > 2 && index === options.length - 1" @click="removeOption(index)"
-          class="bi bi-dash-square remove-button"></i>
+          @input="handleOptionInput(index, $event)"></quiz-create-option>
+        <button v-if="options.length > 2 && index === options.length - 1" @click="removeOption(index)"
+          class="bi bi-dash-square remove-button"></button>
       </div>
     </div>
 
