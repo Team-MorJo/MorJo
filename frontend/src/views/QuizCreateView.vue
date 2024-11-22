@@ -26,7 +26,7 @@
       <button @click="handleQuizSubmit">등록</button>
     </div>
   </div>
-  <div v-if="errorMessage" class="alert">
+  <div v-show="errorMessage" class="alert">
     {{ errorMessage }}
   </div>
 </template>
