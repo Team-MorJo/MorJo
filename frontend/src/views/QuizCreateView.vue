@@ -117,18 +117,6 @@ const handleContentInput = (event) => {
   checkContentLength()
 }
 
-const checkOptionLength = (index) => {
-  const maxLength = 30
-
-  if (options.value[index].length > maxLength) {
-    options.value[index] = options.value[index].slice(0, maxLength)
-    errorMessage.value = '선택지의 글자 수 제한을 넘겼습니다.'
-    return
-  }
-
-  errorMessage.value = ''
-}
-
 const checkOptionByte = (index) => {
   const maxByte = 32
   const byteLength = new TextEncoder().encode(options.value[index]).length
@@ -162,7 +150,6 @@ const checkOptionByte = (index) => {
 
 const handleOptionInput = (index, event) => {
   options.value[index] = event.target.value
-  checkOptionLength(index)
   checkOptionByte(index)
 }
 </script>
