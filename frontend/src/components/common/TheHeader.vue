@@ -51,6 +51,7 @@ const handleToQuizCreate = () => {
   align-items: center;
   gap: 8px;
   padding: 20px 0 12px 0;
+  z-index: 1;
 }
 .pointer {
   cursor: pointer;
