@@ -34,7 +34,8 @@
 <script setup>
 import { ref } from "vue";
 import QuizCreateOption from "@/components/quiz/QuizCreateOption.vue";
-import { postQuizCreate } from "@/api/quizApi";
+import { getSpecificQuiz, postQuizCreate } from "@/api/quizApi";
+import router from "@/router";
 
 const content = ref("")
 const options = ref(["", ""])
@@ -85,9 +86,9 @@ const handleQuizSubmit = async () => {
   }
 
   try {
-    await postQuizCreate(
-      quiz
-    )
+    const data = await postQuizCreate(quiz)
+    console.log(data)
+    await router.push({ name: 'quiz', params: {quizId: data} })
   } catch (error) {
     errorMessage.value = '퀴즈 등록 중 오류가 발생했습니다.'
   }

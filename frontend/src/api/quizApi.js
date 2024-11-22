@@ -28,10 +28,17 @@ export const postQuizCreate = async ({ content, option1, option2, option3, optio
       option4,
       answer,
     })
-    console.log(response.data);
     return response.data
   } catch (error) {
     throw error
   }
 }
 
+export const getSpecificQuiz = async (quizId) => {
+  try {
+    const response = await api.get(`/quiz/${quizId}`)
+    return response.data
+  } catch (error) {
+    return error.data
+  }
+}

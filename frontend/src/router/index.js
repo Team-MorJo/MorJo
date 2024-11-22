@@ -15,6 +15,11 @@ const router = createRouter({
       component: QuizSolveView,
     },
     {
+      path: '/quiz/:quizId',
+      name: 'quiz',
+      component: QuizSolveView,
+    },
+    {
       path: '/join',
       name: 'join',
       component: JoinView,
