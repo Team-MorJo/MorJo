@@ -1,11 +1,20 @@
 <template>
   <header class="header">
-    <h1>너만모르조?</h1>
+    <h1>
+      <span class="t1 t">너</span>
+      <span class="t2 t">만</span>
+      <span class="t3 t">모</span>
+      <span class="t4 t">르</span>
+      <span class="t5 t">조</span>
+      <span class="t6 t">?</span>
+    </h1>
     <nav>
-      <span>문제등록 | </span>
+      <span>문제등록</span>
+      <span> | </span>
       <span v-if="!user.isLoggedIn" @click="handleLogin" class="login">로그인</span>
       <span v-else @click="handleLogout" class="logout">로그아웃</span>
-      <span v-if="user.isLoggedIn"> | 내정보</span>
+      <span> | </span>
+      <span v-if="user.isLoggedIn">내정보</span>
     </nav>
   </header>
 </template>
@@ -36,10 +45,21 @@ const handleLogout = async () => {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-
   padding: 20px 0 12px 0;
 }
 .login, .logout {
   cursor: pointer;
+}
+.t {
+  display: inline-block;
+}
+.t1 {
+  transform: translate(-30px, 30px) rotate(-30deg);
+}
+.t2 {
+  transform: translate(0, -3px) rotate(3deg);
+}
+.t6 {
+  transform: translate(20px, -5px) rotate(-20deg);
 }
 </style>
