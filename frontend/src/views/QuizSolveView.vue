@@ -2,12 +2,12 @@
   <div class="container">
     <quiz-content :content="content"></quiz-content>
     <quiz-option v-for="(option, index) in options" :key="option" :option="option" :selected="index === userAnswer - 1"
-                 @click="onAnswerClick(index)"></quiz-option>
+                 @click="handleAnswerClick(index)"></quiz-option>
     <hr>
     <div class="this-is">이건</div>
     <div class="quiz-buttons">
-      <quiz-button value="상식이다" :selected="isCommonSense === true" @click="onButtonClick(true)"></quiz-button>
-      <quiz-button value="아니다" :selected="isCommonSense === false" @click="onButtonClick(false)"></quiz-button>
+      <quiz-button value="상식이다" :selected="isCommonSense === true" @click="handleButtonClick(true)"></quiz-button>
+      <quiz-button value="아니다" :selected="isCommonSense === false" @click="handleButtonClick(false)"></quiz-button>
     </div>
   </div>
 </template>
@@ -30,11 +30,11 @@ const options = ref([
 const userAnswer = ref(0)
 const isCommonSense = ref(0)
 
-const onAnswerClick = (index) => {
+const handleAnswerClick = (index) => {
   userAnswer.value = index + 1
 }
 
-const onButtonClick = (val) => {
+const handleButtonClick = (val) => {
   isCommonSense.value = val
 }
 

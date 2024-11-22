@@ -31,7 +31,7 @@ export const postQuizCreate = async ({ content, option1, option2, option3, optio
     console.log(response.data);
     return response.data
   } catch (error) {
-    return error.data
+    throw error
   }
 }
 

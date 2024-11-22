@@ -15,15 +15,15 @@
         </label>
         <quiz-create-option :value="option" :placeholder="'선택지 ' + (index + 1) + '을 입력하세요'"
           @input="handleOptionInput(index, $event)"></quiz-create-option>
-        <button v-if="options.length > 2 && index === options.length - 1" @click="removeOption(index)"
+        <button v-if="options.length > 2 && index === options.length - 1" @click="handleOptionRemove(index)"
           class="bi bi-dash-square remove-button"></button>
       </div>
     </div>
 
-    <i v-if="options.length < 4" class="bi bi-plus-lg add-button" @click="addOption"></i>
+    <i v-if="options.length < 4" class="bi bi-plus-lg add-button" @click="handleOptionAdd"></i>
 
     <div class="submit-button">
-      <button @click="submitQuiz">등록</button>
+      <button @click="handleQuizSubmit">등록</button>
     </div>
   </div>
   <div v-if="errorMessage" class="alert">
@@ -41,13 +41,13 @@ const options = ref(["", ""])
 const answer = ref(0)
 const errorMessage = ref("")
 
-const addOption = () => {
+const handleOptionAdd = () => {
   if (options.value.length < 4) {
     options.value.push("")
   }
 };
 
-const removeOption = (index) => {
+const handleOptionRemove = (index) => {
   options.value.splice(index, 1)
 
   if (answer.value === index + 1) {
@@ -55,7 +55,7 @@ const removeOption = (index) => {
   }
 };
 
-const submitQuiz = async () => {
+const handleQuizSubmit = async () => {
   if (content.value.trim() === '') {
     errorMessage.value = "문제 내용을 입력해주세요."
     return
