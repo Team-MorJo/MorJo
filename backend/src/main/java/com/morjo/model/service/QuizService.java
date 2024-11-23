@@ -3,6 +3,8 @@ package com.morjo.model.service;
 import com.morjo.model.dao.QuizDao;
 import com.morjo.model.dto.Quiz;
 import com.morjo.model.dto.QuizResult;
+import com.morjo.model.dto.QuizSubmit;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +45,13 @@ public class QuizService {
         quizDao.insertQuiz(quiz);
 
         return quiz.getQuizId();
+    }
+    
+    public int submitQuizResult(QuizSubmit quizSubmit) {
+        if (quizSubmit.getUserAnswer() == 0) {
+            return -1;
+        }
+        
+        return quizDao.insertQuizSubmit(quizSubmit);
     }
 }
