@@ -66,16 +66,13 @@ public class QuizController {
 
     @PostMapping("/create")
     public ResponseEntity<?> postCreateQuiz(@RequestBody Quiz quiz, HttpSession session) {
-        Object userIdObj = session.getAttribute("userId");
+        Long userId = (Long) session.getAttribute("userId");
 
-        if (userIdObj == null) {
+        if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        long userId = (long) userIdObj;
-        boolean checkUser = userService.checkUser(userId);
-
-        if (!checkUser) {
+        if (!userService.checkUser(userId)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않은 사용자입니다.");
         }
 
