@@ -1,15 +1,14 @@
 <template>
   <div class="container">
     <div class="content-field">
-      <label for="content" class="content">문제 내용</label>
       <textarea rows="1" type="text" :value="content" placeholder="문제를 입력하세요" @input="handleContentInput"
         @keydown.enter.prevent class="content-input" />
     </div>
-    <hr />
+    <hr class="line">
 
-    <div v-for="(option, index) in options" :key="index" class="option-field">
-      <div class="option-input-wrapper">
-        <input type="radio" :value="index + 1" v-model="answer" :id="`option${index}`" hidden />
+    <div v-for="(option, index) in options" :key="index">
+      <div class="option-input">
+        <input type="radio" :value="index + 1" v-model="answer" :id="`option${index}`" hidden/>
         <label :for="`option${index}`" class="answer-button" :class="{ selected: answer === index + 1 }">
           <i :class="answer === index + 1 ? 'bi bi-check-square' : 'bi bi-square'"></i>
         </label>
@@ -87,7 +86,7 @@ const handleQuizSubmit = async () => {
 
   try {
     const data = await postQuizCreate(quiz)
-    await router.push({ name: 'quiz', params: {quizId: data} })
+    await router.push({ name: 'quiz', params: { quizId: data } })
   } catch (error) {
     errorMessage.value = '퀴즈 등록 중 오류가 발생했습니다.'
   }
@@ -153,79 +152,70 @@ const handleOptionInput = (index, event) => {
   checkOptionByte(index)
 }
 </script>
+
 <style scoped>
-.option-input-wrapper input[type="radio"] {
-  display: none;
-}
-
-.answer-button {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.answer-button.selected {
-  color: #1ed71e;
-}
-
-.content {
-  font-size: 20px;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 40%;
   padding: 20px;
-  border: 1px solid #000000;
   min-width: 450px;
 }
 
 .content-field {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .content-input {
-  padding: 12px;
+  padding: 12.5px;
   font-size: 20px;
-  border: 1px solid;
+  border: 2px solid #dcdcdc;
   width: 100%;
   resize: none;
   height: 52px;
   overflow-y: hidden;
 }
 
+.content-input:focus {
+  box-shadow: 0 0 10px #616161;
+  outline: 0px
+}
+
+.line {
+  border: 1px solid #dcdcdc;
+}
+
 .content-input::placeholder {
   font-size: 20px;
 }
 
-.option-field {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.option-input-wrapper {
+.option-input {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap:10px;
   position: relative;
   width: 100%;
 }
 
-.quiz-create-option {
-  flex-grow: 1;
+.answer-button {
+  cursor: pointer;
+  font-size: 24px;
+  color: #dcdcdc;
+}
+
+.answer-button:hover {
+  color: #1ed71e;
+}
+
+.answer-button.selected {
+  color: #1ed71e;
 }
 
 .remove-button {
   cursor: pointer;
   font-size: 26px;
-  color: #000000;
+  color: #dcdcdc;
   position: absolute;
   right: 10px;
 }
@@ -235,8 +225,9 @@ const handleOptionInput = (index, event) => {
 }
 
 .add-button {
-  font-size: 26px;
   cursor: pointer;
+  font-size: 30px;
+  color: #dcdcdc;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -245,7 +236,7 @@ const handleOptionInput = (index, event) => {
 
 .add-button:hover {
   color: #1ed71e;
-  border: 1px solid #e4e3e3;
+  border: 2px solid #dcdcdc;
 }
 
 .submit-button {
@@ -256,22 +247,16 @@ const handleOptionInput = (index, event) => {
 
 .submit-button button {
   font-size: 16px;
-  background-color: #000000;
-  color: white;
-  border: none;
+  background-color: white;
+  color: black;
+  border: 2px solid #dcdcdc;
   cursor: pointer;
   width: 100%;
   height: 46px;
 }
 
 .submit-button button:hover {
-  color: black;
-  background-color: white;
-  border: 1px solid;
-}
-
-.answer-button {
-  font-size: 24px;
+  color: #1ed71e;
 }
 
 .alert {

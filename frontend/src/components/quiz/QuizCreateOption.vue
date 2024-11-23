@@ -1,5 +1,5 @@
 <template>
-  <div class="option-input-wrapper">
+  <div class="option-input">
     <input type="text" :value="value" :placeholder="placeholder" />
   </div>
 </template>
@@ -15,19 +15,17 @@ defineProps({
 </script>
 
 <style scoped>
-.option-input-wrapper {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-}
-
 input {
   padding: 12px;
   font-size: 16px;
-  border: 1px solid;
+  border: 2px solid #dcdcdc;
   width: 100%;
   height: 50px;
+}
+
+input:focus {
+  box-shadow: 0 0 10px #616161;
+  outline: 0px
 }
 
 input::placeholder {
