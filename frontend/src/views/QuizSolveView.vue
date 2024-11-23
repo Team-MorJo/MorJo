@@ -23,7 +23,7 @@ import QuizOption from '@/components/quiz/QuizOption.vue'
 import QuizButton from '@/components/quiz/QuizButton.vue'
 
 import { ref, onMounted, watch } from 'vue'
-import { getQuiz, getQuizResult, getRandomQuiz } from '@/api/quizApi.js'
+import { getQuiz, getQuizResult, getRandomQuiz, postQuizSubmit } from '@/api/quizApi.js'
 import { useUser } from '@/stores/user.js'
 import router from '@/router/index.js'
 import { useRoute } from 'vue-router'
@@ -73,16 +73,26 @@ const handleButtonClick = async (val) => {
   await submit()
 }
 
+const quizSubmit = ref({
+  quizId: 0,
+  userAnswer: 0,
+  isCommonSense: 0,
+})
+
 const submit = async () => {
   if (userAnswer.value === 0 || isCommonSense.value === 0) {
     return
   }
 
+  quizSubmit.value.quizId = quiz.value.quizId
+  quizSubmit.value.userAnswer = userAnswer.value
+  quizSubmit.value.isCommonSense = isCommonSense.value
+
   if (user.isLoggedIn) {
-    // 로그인상태면 결과제출 api 호출
+    await postQuizSubmit(quizSubmit.value)
   }
+
   const data = await getQuizResult(quiz.value.quizId)
-  console.log(data)
 
   if (data === null) {
     await router.push({ name: 'home' })

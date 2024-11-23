@@ -51,3 +51,12 @@ export const getSpecificQuiz = async (quizId) => {
     return error.data
   }
 }
+
+export const postQuizSubmit = async (quizSubmit) => {
+  try {
+    const response = await api.post('/quiz/submit', quizSubmit)
+    return response.data
+  } catch (error) {
+    return error.data
+  }
+}
