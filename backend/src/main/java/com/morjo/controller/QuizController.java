@@ -104,7 +104,7 @@ public class QuizController {
         int result = quizService.submitQuizResult(quizSubmit);
         
         if (result != 1) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("선택지를 선택하지 않았습니다");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효한 선택지가 아닙니다");
         }
         
         return ResponseEntity.status(HttpStatus.OK).body(result);

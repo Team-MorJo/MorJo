@@ -1,12 +1,14 @@
 package com.morjo.model.service;
 
+import org.springframework.stereotype.Service;
+
 import com.morjo.model.dao.QuizDao;
+import com.morjo.model.dao.UserDao;
 import com.morjo.model.dto.Quiz;
 import com.morjo.model.dto.QuizResult;
 import com.morjo.model.dto.QuizSubmit;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
@@ -45,12 +47,20 @@ public class QuizService {
 
         return quiz.getQuizId();
     }
-    
+
     public int submitQuizResult(QuizSubmit quizSubmit) {
         if (quizSubmit.getUserAnswer() == 0) {
             return -1;
         }
-        
+
+        long quizId = quizSubmit.getQuizId();
+        Quiz quiz = quizDao.selectQuizById(quizId);
+
+        if ((quizSubmit.getUserAnswer() == 3 && quiz.getOption3() == null)
+                || (quizSubmit.getUserAnswer() == 4 && quiz.getOption4() == null)) {
+            return -1;
+        }
+
         return quizDao.insertQuizSubmit(quizSubmit);
     }
 }
