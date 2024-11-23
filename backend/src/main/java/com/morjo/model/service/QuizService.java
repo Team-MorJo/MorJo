@@ -32,7 +32,6 @@ public class QuizService {
     }
 
     public long createQuiz(Quiz quiz) {
-        // !TODO 유저 아이디를 넣어줄 수 있도록 수정
         if (quiz.getContent() == null || quiz.getAnswer() == 0 || quiz.getOption1() == null
                 || quiz.getOption2() == null) {
             return -1;
