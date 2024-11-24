@@ -52,7 +52,7 @@ public class QuizService {
         long quizId = quizSubmit.getQuizId();
         Quiz quiz = quizDao.selectQuizById(quizId);
 
-        if ((quizSubmit.getUserAnswer() < 1 && quizSubmit.getUserAnswer() > 4)
+        if ((quizSubmit.getUserAnswer() < 1 || quizSubmit.getUserAnswer() > 4)
                 || (quizSubmit.getUserAnswer() == 3 && quiz.getOption3() == null)
                 || (quizSubmit.getUserAnswer() == 4 && quiz.getOption4() == null)
                 || (quizSubmit.getIsCommonSense() == null)) {
