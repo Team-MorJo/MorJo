@@ -99,6 +99,12 @@ public class QuizController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사이트 회원이 아닙니다");
         }
         
+        boolean isSolved = quizService.isSolved(quizSubmit.getQuizId(), userId);
+        
+        if (isSolved) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 푼 문제입니다");
+        }
+        
         quizSubmit.setUserId(userId);
         
         int result = quizService.submitQuizResult(quizSubmit);
