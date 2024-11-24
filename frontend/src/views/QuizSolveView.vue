@@ -73,23 +73,20 @@ const handleButtonClick = async (val) => {
   await submit()
 }
 
-const quizSubmit = ref({
-  quizId: 0,
-  userAnswer: 0,
-  isCommonSense: 0,
-})
 
 const submit = async () => {
   if (userAnswer.value === 0 || isCommonSense.value === 0) {
     return
   }
-
-  quizSubmit.value.quizId = quiz.value.quizId
-  quizSubmit.value.userAnswer = userAnswer.value
-  quizSubmit.value.isCommonSense = isCommonSense.value
+  
+  const quizSubmit = ({
+    quizId: quiz.value.quizId,
+    userAnswer: userAnswer.value,
+    isCommonSense: isCommonSense.value,
+  })
 
   if (user.isLoggedIn) {
-    await postQuizSubmit(quizSubmit.value)
+    await postQuizSubmit(quizSubmit)
   }
 
   const data = await getQuizResult(quiz.value.quizId)
