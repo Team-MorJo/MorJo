@@ -12,5 +12,5 @@ public class QuizSubmit {
     private long quizId;
     private long userId;
     private int userAnswer;
-    private boolean isCommonSense;
+    private Boolean isCommonSense;
 }
