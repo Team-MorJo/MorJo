@@ -71,11 +71,12 @@ const handleRegisterClick = async () => {
   width: 100%;
   height: 52px;
   border-radius: 4px;
-  border: 1px solid #000000;
+  background-color: #000000;
+  color: #ffffff;
   font-size: 16px;
 }
 
 .register:hover {
-  border: 2px solid;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 </style>
