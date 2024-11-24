@@ -32,13 +32,15 @@ const handleRegisterClick = async () => {
 
 <style scoped>
 .container {
-  padding-top: 80px;
+  padding: 80px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  width: 20%;
-  min-width: 250px;
+  width: 30%;
+  min-width: 350px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(50px);
 }
 
 .title {
@@ -53,9 +55,11 @@ const handleRegisterClick = async () => {
 }
 .nickname {
   width: 100%;
-  aspect-ratio: 7;
+  height: 52px;
   padding: 0 8px;
-  font-size: 16px;
+  font-size: 20px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 
 .error {
@@ -65,8 +69,10 @@ const handleRegisterClick = async () => {
 
 .register {
   width: 100%;
-  aspect-ratio: 7;
+  height: 52px;
+  border-radius: 4px;
   border: 1px solid #000000;
+  font-size: 16px;
 }
 
 .register:hover {
