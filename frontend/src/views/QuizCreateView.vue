@@ -87,7 +87,7 @@ const handleQuizSubmit = async () => {
   try {
     const data = await postQuizCreate(quiz)
     await router.push({ name: 'quiz', params: { quizId: data } })
-  } catch (error) {
+  } catch {
     errorMessage.value = '퀴즈 등록 중 오류가 발생했습니다.'
   }
 }
@@ -161,6 +161,8 @@ const handleOptionInput = (index, event) => {
   width: 40%;
   padding: 20px;
   min-width: 450px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(50px);
 }
 
 .content-field {
@@ -168,9 +170,9 @@ const handleOptionInput = (index, event) => {
 }
 
 .content-input {
-  padding: 12.5px;
+  padding: 12px;
   font-size: 20px;
-  border: 2px solid #dcdcdc;
+  border-radius: 4px;
   width: 100%;
   resize: none;
   height: 52px;
@@ -179,11 +181,11 @@ const handleOptionInput = (index, event) => {
 
 .content-input:focus {
   box-shadow: 0 0 10px #616161;
-  outline: 0px
+  outline: 0
 }
 
 .line {
-  border: 1px solid #dcdcdc;
+  border: 1px solid #ffffff;
 }
 
 .content-input::placeholder {
@@ -201,7 +203,7 @@ const handleOptionInput = (index, event) => {
 .answer-button {
   cursor: pointer;
   font-size: 24px;
-  color: #dcdcdc;
+  color: #ffffff;
 }
 
 .answer-button:hover {
@@ -227,16 +229,17 @@ const handleOptionInput = (index, event) => {
 .add-button {
   cursor: pointer;
   font-size: 30px;
-  color: #dcdcdc;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
+  border-radius: 4px;
 }
 
 .add-button:hover {
   color: #1ed71e;
-  border: 2px solid #dcdcdc;
+  border: 2px solid #ffffff;
 }
 
 .submit-button {
@@ -247,16 +250,16 @@ const handleOptionInput = (index, event) => {
 
 .submit-button button {
   font-size: 16px;
-  background-color: white;
-  color: black;
-  border: 2px solid #dcdcdc;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 1);
+  border-radius: 4px;
   cursor: pointer;
   width: 100%;
   height: 46px;
 }
 
 .submit-button button:hover {
-  color: #1ed71e;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .alert {
