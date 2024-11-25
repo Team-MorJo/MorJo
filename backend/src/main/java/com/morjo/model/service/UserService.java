@@ -1,8 +1,11 @@
 package com.morjo.model.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.morjo.model.dao.UserDao;
+import com.morjo.model.dto.Quiz;
 import com.morjo.model.dto.User;
 import com.morjo.model.dto.UserScore;
 
@@ -37,5 +40,13 @@ public class UserService {
     
     public UserScore getUserScore(Long userId) {
         return userDao.selectUserScore(userId);
+    }
+
+    public List<Quiz> getUserQuizSolved(Long userId) {
+        return userDao.selectUserQuizSolved(userId);
+    }
+    
+    public List<Quiz> getUserQuizMade(Long userId) {
+        return userDao.selectUserQuizMade(userId);
     }
 }
