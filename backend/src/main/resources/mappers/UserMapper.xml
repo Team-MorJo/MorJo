@@ -8,10 +8,38 @@
     </select>
     <select id="selectUserByUserId" parameterType="Long" resultType="User">
         SELECT * FROM user
-        WHERE user_id = #{UserId}
+        WHERE user_id = #{userId}
     </select>
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO user (kakao_id, nickname)
         VALUES (#{kakaoId}, #{nickname})
     </insert>
+    <select id="selectUserCorrectRate" parameterType="long" resultType="double">
+        SELECT AVG(quiz_user.user_answer = quiz.answer)
+        FROM quiz.user
+        INNER JOIN quiz ON quiz_user.user_id = quiz.user_id
+        WHERE quiz_user.user_id = #{userId}
+    </select>
+    <select id="selectUserScore" parameterType="long" resultType="UserScore">
+        WITH common_sense_rate AS (SELECT quiz_id, AVG(is_common_sense) AS common_sense_rate
+        FROM quiz_user
+        GROUP BY quiz_id)
+        SELECT AVG(quiz_user.user_answer = quiz.answer) AS correct_rate,
+            SUM(CASE WHEN quiz_user.user_answer = quiz.answer THEN 1
+            ELSE (1 - common_sense_rate.common_sense_rate) END) / COUNT(*) AS common_sense_score
+        FROM quiz_user
+        INNER JOIN quiz ON quiz_user.quiz_id = quiz.quiz_id
+        INNER JOIN common_sense_rate ON quiz.quiz_id = common_sense_rate.quiz_id
+        WHERE quiz_user.user_id = #{userId}
+    </select>
+    <select id="selectUserQuizSolved" parameterType="long" resultType="Quiz">
+        SELECT quiz.quiz_id, quiz.content
+        FROM quiz INNER JOIN quiz_user ON quiz.quiz_id = quiz_user.quiz_id
+        WHERE user_id = #{userId}
+    </select>
+    <select id="selectUserQuizMade" parameterType="long" resultType="Quiz">
+        SELECT quiz_id, content
+        FROM quiz
+        WHERE created_user_id = #{userId}
+    </select>
 </mapper>
