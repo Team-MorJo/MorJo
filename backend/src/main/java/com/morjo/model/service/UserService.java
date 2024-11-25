@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.morjo.model.dao.UserDao;
 import com.morjo.model.dto.User;
+import com.morjo.model.dto.UserScore;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,5 +33,9 @@ public class UserService {
         }
 
         return user.getUserId();
+    }
+    
+    public UserScore getUserScore(Long userId) {
+        return userDao.selectUserScore(userId);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morjo.model.dto.User;
+import com.morjo.model.dto.UserScore;
 import com.morjo.model.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -58,5 +59,28 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    
+    @GetMapping("/score")
+    public ResponseEntity<?> getUserInfo(HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 상태가 아닙니다.");
+        }
+        
+        boolean check = userService.checkUser(userId);
+
+        if (!check) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("사이트 회원이 아닙니다");
+        }
+        
+        UserScore userScore = userService.getUserScore(userId);
+        
+        if (userScore == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("데이터가 없습니다");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(userScore);
     }
 }

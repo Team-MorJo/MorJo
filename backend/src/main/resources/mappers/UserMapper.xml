@@ -14,4 +14,22 @@
         INSERT INTO user (kakao_id, nickname)
         VALUES (#{kakaoId}, #{nickname})
     </insert>
+    <select id="selectUserCorrectRate" parameterType="long" resultType="double">
+        SELECT AVG(quiz_user.user_answer = quiz.answer)
+        FROM quiz.user
+        INNER JOIN quiz ON quiz_user.user_id = quiz.user_id
+        WHERE quiz_user.user_id = #{UserId}
+    </select>
+    <select id="selectUserScore" parameterType="long" resultType="UserScore">
+        WITH common_sense_rate AS (SELECT quiz_id, AVG(is_common_sense) AS common_sense_rate
+        FROM quiz_user
+        GROUP BY quiz_id)
+        SELECT AVG(quiz_user.user_answer = quiz.answer) AS correct_rate,
+            SUM(CASE WHEN quiz_user.user_answer = quiz.answer THEN 1
+            ELSE (1 - common_sense_rate.common_sense_rate) END) / COUNT(*) AS common_sense_score
+        FROM quiz_user
+        INNER JOIN quiz ON quiz_user.quiz_id = quiz.quiz_id
+        INNER JOIN common_sense_rate ON quiz.quiz_id = common_sense_rate.quiz_id
+        WHERE quiz_user.user_id = #{UserId}
+    </select>
 </mapper>
