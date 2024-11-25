@@ -3,7 +3,7 @@
     <div class="title">닉네임을 정해주세요</div>
     <div class="nickname-container">
       <input type="text" v-model="nickname" class="nickname">
-      <div v-if="error" class="error">{{ error }}</div>
+      <div v-show="error" class="error">{{ error }}</div>
     </div>
     <button class="register" @click="handleRegisterClick">가입하기</button>
   </div>
@@ -53,8 +53,15 @@ const handleRegisterClick = async () => {
     await router.push({
       name: 'home'
     })
-  } catch {
-    error.value = '중복된 닉네임입니다'
+  } catch (e) {
+    if (e.message.include("중복")) {
+      error.value = e.message;
+      return
+    }
+    alert(e.message)
+    await router.push({
+      name: 'home'
+    })
   }
 
 }
