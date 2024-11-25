@@ -122,9 +122,6 @@ const setQuiz = async () => {
 const handleShowNextClick = async () => {
   if (router.currentRoute.value.name == 'quiz') {
     await router.push({ name: 'home'})
-  }
-
-  if (router.currentRoute.value.name !== 'home') {
     return
   }
 
