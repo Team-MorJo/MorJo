@@ -6,7 +6,8 @@ CREATE TABLE `user` (
   `kakao_id` bigint UNIQUE NOT NULL,
   `nickname` varchar(48) UNIQUE NOT NULL,
   `role` varchar(20) DEFAULT 'member',
-  `created_at` timestamp DEFAULT now()
+  `created_at` timestamp DEFAULT now(),
+  `deleted` bit DEFAULT false
 );
 
 CREATE TABLE `quiz` (
